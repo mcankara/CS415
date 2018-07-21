@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Modern video player</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css" media="all" /><!-- scroll in playlist -->
+		<link rel="stylesheet" type="text/css" href="css/playlist_bottom_v.css" /><!-- main plugin css -->
+        <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet"><!-- icons -->
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script><!-- scroll in playlist -->
+        <script type="text/javascript" src="js/hls.min.js"></script><!-- live streaming -->
+        <script type="text/javascript" src="js/three.min.js"></script><!-- 360 -->
+        <script type="text/javascript" src="js/orbitControls.min.js"></script><!-- 360 -->
+		<script type="text/javascript" src="js/jquery.dotdotdot.min.js"></script>
+        <script type="text/javascript" src="js/new.js"></script><!-- main plugin js -->
+        <script type="text/javascript">
+        
+			var player;  
+			jQuery(document).ready(function($) {
+				
+				var settings = {
+                    sourcePath:"",
+					instanceName:"player1",
+					activeItem:0,
+					volume:0.5,
+					autoPlay:false,
+					randomPlay:false,
+					loopingOn:true,
+					mediaEndAction:"next",
+					aspectRatio:2,
+                    facebookAppId:"",
+                    youtubeAppId:"",
+					usePlaylist:true,
+                    playlistPosition:"bottom",
+					playlistOpened:true,
+                    navigationType:'scroll',
+                    navigationDirection:"vertical",
+                    playlistScrollTheme:"light",
+					useKeyboardNavigationForPlayback:true,
+                    disableRightClick:true,
+                    hideQualityMenuOnSingleQuality:false,
+                    embedWidth:"1000px",
+                    embedHeight:"400px",
+                    embedSrc:"Place your embed code here!",
+                    forceMobileAutoplay:false,
+                    truncatePlaylistDescription:false,
+                    sortableTracks:false
+                    
+				};
+                
+                player = $("#mvp-wrapper").mvp(settings);
+
+			});
+
+        </script>
+    
+  </head>
+  <body>  
+  
+        <div id="mvp-wrapper">
+            
+            <div class="mvp-player-holder">
+
+                <div class="mvp-media-holder">
+
+                    <div class="mvp-youtube-holder"></div>
+                    <div class="mvp-vimeo-holder"></div>
+                    <div class="mvp-audio-holder"></div>
+                    <div class="mvp-video-holder"></div>
+                    <div class="mvp-image-holder"></div>
+                    <div class="mvp-iframe-holder"></div>
+
+                    <img class="mvp-vr-info" src="data/360.png" alt="">
+
+                    <div class="mvp-player-loader"></div>
+
+                </div>
+
+                <div class="mvp-big-play"><i class="fas fa-play"></i></div>
+
+                <div class="mvp-elem-holder"></div>
+
+                <div class="mvp-info-holder">
+                    <div class="mvp-info-data"></div>
+                    <div class="mvp-info-close mvp-contr-btn" data-tooltip="Close" data-tooltip-position="left"><i class="fas fa-times"></i></div>
+                </div> 
+
+                <div class="mvp-share-holder">
+
+                    <div class="mvp-share-holder-inner">
+
+                        <div class="mvp-share-data">
+                            <div class="mvp-share-title"><i class="fas fa-share-alt"></i>Share via:</div>
+                            <div class="mvp-share-data-inner">   
+                                <div class="mvp-share-item" data-type="tumblr" data-tooltip="tumblr"><i class="fab fa-tumblr"></i></div>
+                                <div class="mvp-share-item" data-type="twitter" data-tooltip="twitter"><i class="fab fa-twitter"></i></div>
+                                <div class="mvp-share-item" data-type="facebook" data-tooltip="facebook"><i class="fab fa-facebook-f"></i></div>
+                                <div class="mvp-share-item" data-type="googleplus" data-tooltip="googleplus"><i class="fab fa-google-plus-g"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="mvp-share-title"><i class="fas fa-link"></i>Direct link:</div>
+                        <div class="mvp-link-data">
+                            <p class="mvp-link-code"></p>
+                            <div class="mvp-link-copy">COPY</div>
+                        </div>
+
+                        <div class="mvp-share-title"><i class="fas fa-code"></i>Embed code:</div>
+                        <div class="mvp-embed-data">
+                            <p class="mvp-embed-code"></p>
+                            <div class="mvp-embed-copy">COPY</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mvp-share-close mvp-contr-btn" data-tooltip="Close" data-tooltip-position="left"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="mvp-player-controls1 mvp-player-interface">
+
+                    <div class="mvp-seekbar">
+                        <div class="mvp-progress-bg">
+                            <div class="mvp-load-level"></div>
+                            <div class="mvp-progress-level"></div>
+                        </div>
+                    </div>
+
+                    <div class="mvp-player-controls1-left">
+
+                        <div class="mvp-playback-toggle mvp-contr-btn" data-tooltip="Playback">
+                            <i class="fas fa-play mvp-btn mvp-btn-play"></i>
+                            <i class="fas fa-pause mvp-btn mvp-btn-pause"></i>
+                        </div>
+                        <div class="mvp-next-toggle mvp-contr-btn" data-tooltip="Next"><i class="fas fa-step-forward"></i></div>
+
+                        <p class="mvp-media-time-current">0:00</p>
+                        <p class="mvp-media-time-separator">&nbsp;&#47;&nbsp;</p>
+                        <p class="mvp-media-time-total">0:00</p>
+
+                    </div>
+
+                    <div class="mvp-player-controls1-right">
+                        
+                        <div class="mvp-quality-toggle mvp-contr-btn">
+                            <i class="fas fa-cog" data-tooltip="Quality"></i>
+                            <div class="mvp-quality-holder">
+                                <ul class="mvp-quality-menu"></ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-playback-rate-toggle mvp-contr-btn">
+                            <i class="fas fa-crop" data-tooltip="Playback rate"></i>
+                            <div class="mvp-playback-rate-holder">
+                                <ul class="mvp-playback-rate-menu">
+                                    <li class="mvp-menu-item"><a href="#">2</a></li>
+                                    <li class="mvp-menu-item"><a href="#">1.5</a></li>
+                                    <li class="mvp-menu-item"><a href="#">1</a></li>
+                                    <li class="mvp-menu-item"><a href="#">0.5</a></li>
+                                    <li class="mvp-menu-item"><a href="#">0.25</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-volume-wrapper mvp-contr-btn">
+                            <div class="mvp-volume-toggle mvp-contr-btn" data-tooltip="Volume">
+                                <i class="fas fa-volume-up mvp-btn mvp-btn-volume-up"></i>
+                                <i class="fas fa-volume-down mvp-btn mvp-btn-volume-down"></i>
+                                <i class="fas fa-volume-off mvp-btn mvp-btn-volume-off"></i>
+                            </div>
+                            <div class="mvp-volume-seekbar">
+                                <div class="mvp-volume-bg"></div>
+                                <div class="mvp-volume-level"></div>
+                            </div> 
+                        </div>  
+
+                        <div class="mvp-subtitle-toggle mvp-contr-btn">
+                            <i class="fas fa-closed-captioning" data-tooltip="Subtitles"></i>
+                            <div class="mvp-subtitle-holder">
+                                <ul class="mvp-subtitle-menu"></ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-info-toggle mvp-contr-btn" data-tooltip="Info"><i class="fas fa-info-circle"></i></div>
+                        
+                        <div class="mvp-share-toggle mvp-contr-btn" data-tooltip="Share"><i class="fas fa-share-alt"></i></div>
+
+                        <div class="mvp-download-toggle mvp-contr-btn" data-tooltip="Download"><a href="#"><i class="fas fa-download"></i></a></div>
+
+                        <div class="mvp-fullscreen-toggle mvp-contr-btn">
+                            <i class="fas fa-expand mvp-btn mvp-btn-fullscreen" data-tooltip="Fullscreen"></i>
+                            <i class="fas fa-compress mvp-btn mvp-btn-normal" data-tooltip="Normal"></i>
+                        </div>
+
+                        <div class="mvp-playlist-toggle mvp-contr-btn" data-tooltip="Playlist"><i class="fas fa-list-ul"></i></div>
+
+                    </div>
+                </div>
+
+                <a class="mvp-logo" href="https://codecanyon.net/user/Tean/portfolio?ref=Tean" target="_blank"><img src="data/logo.png" alt=""></a>
+
+            </div><!-- end mvp-player-holder -->
+
+            <div class="mvp-playlist-holder">
+                <div class="mvp-playlist-inner">
+                    <div class="mvp-playlist-content">
+
+                        <div class="mvp-playlist-item" data-type="audio" data-path='[{"quality": "default", "mp3": "media/audio/02.mp3"},{"quality": "320kbps", "mp3": "media/audio/02_320kbps.mp3"}]' data-poster="media/audio/poster/02.jpg" data-share="http://www.google.com"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/audio/thumb/02.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Audio title goes here</span>
+                                <span class="mvp-playlist-description">Set multiple playback qualities for each song which generates quality menu.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="audio" data-path='[{"quality": "default", "mp3": "media/audio/01.mp3", "wav": "media/audio/wav/01.wav"}]' data-poster="media/audio/poster/01.jpg" data-share="http://www.google.com"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/audio/thumb/01.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Audio title goes here</span>
+                                <span class="mvp-playlist-description">Supported audio formats are mp3 and wav, and HLS Live Streaming format.</span>
+                            </div>
+
+                            <div class="mvp-subtitles">
+                                <div data-label="English" data-src="data/subtitles/sintel-en.vtt" data-default></div>  
+                                <div data-label="German" data-src="data/subtitles/sintel-de.vtt"></div>
+                                <div data-label="Spanish" data-src="data/subtitles/sintel-es.vtt"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="video" data-path='[{"quality": "default", "mp4": "media/video/01.mp4"}, {"quality": "1280p", "mp4": "media/video/01_1280p.mp4"}, {"quality": "720p", "mp4": "media/video/01_720p.mp4"}]' data-quality="720p" data-poster="media/video/poster/01.jpg" data-download="media/video/01.mp4" data-share="https://codecanyon.net/user/Tean/portfolio"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/video/thumb/01.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Video title goes here</span>
+                                <span class="mvp-playlist-description">Self hosted video. Commodo vitae, tempor eu, urna eu mi hendrerit. Maecenas eu erat condimentum.</span>
+                            </div>
+
+                            <div class="mvp-subtitles">
+                                <div data-label="English" data-src="data/subtitles/sintel-en.vtt" data-default></div>  
+                                <div data-label="German" data-src="data/subtitles/sintel-de.vtt"></div>
+                                <div data-label="Spanish" data-src="data/subtitles/sintel-es.vtt"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="video" data-path='[{"quality": "default", "mp4": "media/video/02.mp4"}]' data-poster="media/video/poster/02.jpg" data-download="media/video/02.mp4" data-share="http://www.google.com"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/video/thumb/02.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Video title goes here</span>
+                                <span class="mvp-playlist-description">Custom description. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#9e9e9e;"> link here</a> sem dolor iaculis eros nec vivamus dolor.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="youtube_single" data-path="az_TlQMRaMI" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="https://i.ytimg.com/vi/az_TlQMRaMI/mqdefault.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Youtube video goes here 1</span>
+                                <span class="mvp-playlist-description">This Fashion Commercial is style Preview of our Resort wear 2016 and Spring Summer 2016 Collection.</span>
+                            </div>
+
+                            <div class="mvp-subtitles">
+                                <div data-label="English" data-src="data/subtitles/sintel-en.vtt" data-default></div>  
+                                <div data-label="German" data-src="data/subtitles/sintel-de.vtt"></div>
+                                <div data-label="Spanish" data-src="data/subtitles/sintel-es.vtt"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="youtube_single" data-path="rNTyF4qXw3A" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="https://i.ytimg.com/vi/rNTyF4qXw3A/mqdefault.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Youtube video goes here</span>
+                                <span class="mvp-playlist-description">Youtube custom description. A Fashion Commercial for White Heir's new line of clothing coming fall 2015.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="video_360" data-path='[{"quality": "default", "mp4": "media/360_video/02.mp4"}]' data-poster="media/360_video/02.jpg" data-share="https://codecanyon.net/user/Tean/portfolio"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/360_video/thumb/02.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">360 video title goes here</span>
+                                <span class="mvp-playlist-description">Self hosted 360 video. Commodo vitae, urna eu mi hendrerit. Maecenas eu erat condimentum.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="video_360" data-path='[{"quality": "default", "mp4": "media/360_video/03.mp4"}]' > 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/360_video/thumb/03.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">360° Great Hammerhead Shark Encounter</span>
+                                <span class="mvp-playlist-description">GeographicDive into this 360° video and go face to face with a curious great hammerhead shark.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="image_360" data-path='[{"quality": "default", "image": "media/360_image/01.jpg"}, {"quality": "1500px", "image": "media/360_image/01.jpg"}, {"quality": "3000px", "image": "media/360_image/01.jpg"}]' data-share="https://codecanyon.net/user/Tean/portfolio"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/360_image/thumb/01.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">360 image title goes here</span>
+                                <span class="mvp-playlist-description">Image panorama. Commodo vitae, tempor eu, urna eu mi hendrerit. Maecenas eu erat condimentum.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="image_360" data-path='[{"quality": "default", "image": "media/360_image/02.jpg"}]' data-share="https://codecanyon.net/user/Tean/portfolio"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/360_image/thumb/02.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">360 image title goes here</span>
+                                <span class="mvp-playlist-description">Custom description. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#9e9e9e;"> link here</a> sem dolor iaculis eros nec vivamus dolor.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="image" data-path='[{"quality": "default", "image": "media/image/01.jpg"}, {"quality": "1500px", "image": "media/image/01_1500.jpg"}, {"quality": "3000px", "image": "media/image/01_3000.jpg"}]' data-download="media/image/01.jpg" data-share="http://www.google.com" data-duration=""> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/image/thumb/01.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Image title goes here</span>
+                                <span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Maecenas eu erat condimentum.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="image" data-path='[{"quality": "default", "image": "media/image/02.jpg"}]' data-download="media/image/02.jpg" data-share="http://www.google.com"> 
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/image/thumb/02.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Image title goes here</span>
+                                <span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Maecenas eu erat condimentum.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="youtube_single" data-path="tl6rVm9vx2g" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="https://i.ytimg.com/vi/tl6rVm9vx2g/mqdefault.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">360 Youtube video goes here</span>
+                                <span class="mvp-playlist-description">Stand on the edge of a 400 foot canyon and fly through the air into some serious exposure.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="iframe" data-path="https://fast.wistia.net/embed/iframe/lyci2n3zo6?autoplay=false" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/other/wistia.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Wistia Video here</span>
+                                <span class="mvp-playlist-description">Wistia provides simple software for creating, managing, and sharing videos for business.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="iframe" data-path="https://maps.google.com/maps?q=university of san francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="media/other/maps.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Google Maps embed here</span>
+                                <span class="mvp-playlist-description">The Google Maps Embed API lets you place an interactive map, or Street View panorama in your website.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="iframe" data-path="http://www.ustream.tv/embed/recorded/29571804?html5ui=1&autoplay=false" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="http://static-cdn1.ustream.tv/i/channel/picture/1/3/4/6/13467240/13467240_22copia2_1367106811,66x66,r:1.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Daily Motion Video here</span>
+                                <span class="mvp-playlist-description">Glamour Woman Dj's. Live music with video clips of Models and various</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="vimeo_single" data-path="84503186" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="https://i.vimeocdn.com/video/default-caution_130x73.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Vimeo video goes here</span>
+                                <span class="mvp-playlist-description">OTBMIAMI Presents High Fashion with We The Fresh clothing. Music: Platinum Kush clouds @AIMISMIA</span>
+                            </div>
+
+                        </div>
+
+                        <div class="mvp-playlist-item" data-type="vimeo_single" data-path="227269307" data-noapi>
+
+                            <div class="mvp-playlist-thumb">
+                                <img class="mvp-thumbimg" src="https://i.vimeocdn.com/video/647052175_130x73.jpg" alt="">
+                            </div>
+
+                            <div class="mvp-playlist-info">
+                                <span class="mvp-playlist-title">Vimeo 360 video goes here</span>
+                                <span class="mvp-playlist-description">Vidéo à 360° réalisée pour la Commission du Film Alpes-Maritimes Côte d\'Azur pour présenter ses lieux de tournage auprès des professionnels du cinéma.</span>
+                            </div>
+
+                        </div>
+                    
+                    </div>
+                </div> 
+            </div><!-- end mvp-playlist-holder --> 
+
+            <div class="mvp-tooltip"><p></p></div>   
+
+        </div><!-- end mvp-wrapper -->
+
+
+      </body>
+</html>

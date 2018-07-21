@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="en">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title><ui:insert name="title">PrimeFaces Serenity</ui:insert></title>
+        <h:outputScript name="js/nanoscroller.js" library="serenity-layout" />
+        <h:outputScript name="js/layout.js" library="serenity-layout" />
+        <h:outputScript name="js/ripple.js" library="serenity-layout" />
+        <ui:insert name="head"/>
+
+        <link rel="shortcut icon" href="https://pbs.twimg.com/profile_images/1185819847/MDTO_Logo__Icon__400x400.png"/>
+
+        <style>
+
+            @media (max-width: 1024px) {
+                .layout-content{
+                    padding-top: 64px !important;
+                }
+            }
+
+            @media (min-width: 1025px) {
+                .layout-content{
+                    padding-top: #{guestPreferences.horizontal ? '108px !important':'64px !important'};
+                }
+            }
+
+
+            .ui-selectonemenu-label,
+            .ui-selectonemenu-list-item{    
+                text-align: center !important;
+            }
+
+            body
+            {
+                font-family: arial;
+            }
+
+            .timetable th, .timetable td
+            {
+                margin: 0;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            
+            
+
+            .timetable td
+            {
+                padding: 0px 0px;
+                font-size: 12px;
+                color:#C0D0D4;
+
+                border-radius: 3px;
+                
+                outline: 1px solid #e3e3e3;
+            }
+
+            .timetable th
+            {
+                background: #82ABAB;
+                color: white;
+                padding: 2px 0px;
+            }
+
+            .timetable td:hover
+            {
+                cursor: pointer;
+                color: white;
+            }
+            .timetable th:hover
+            {
+                cursor: pointer;
+            }
+
+            .blink_me {
+                animation: blinker 1s linear infinite;
+
+            }
+
+            @keyframes blinker {  
+                50% { opacity: 0.5; }
+            }
+
+            .short-text { display: none; }
+            @media (max-width: 1200px) {
+                .short-text { display: block; }
+                .full-text { display: none; }
+            }
+
+        </style> 
+
+    </h:head>
+
+    <h:body style="min-width: 100% !important;">
+
+        <f:event listener="#{loginBean.userLoginControl()}" type="preRenderView" />
+
+
+        <div class="layout-wrapper #{guestPreferences.orientationRTL ? 'layout-rtl' : null} #{guestPreferences.horizontal ? 'layout-menu-horizontal' : null}">
+            <ui:include src="./sidebar.xhtml" />
+
+            <div class="layout-main">
+                <ui:include src="./topbar.xhtml" />
+
+                <div class="layout-content">
+                    <ui:insert name="content"/>
+                </div>
+
+                <ui:include src="./footer.xhtml" />
+
+                <div class="layout-main-mask"></div>
+            </div>
+        </div>
+
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <h:outputStylesheet name="css/nanoscroller.css" library="serenity-layout" />
+        <h:outputStylesheet name="css/ripple.css" library="serenity-layout" />
+        <h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css" library="serenity-layout" />
+    </h:body>
+
+</html>

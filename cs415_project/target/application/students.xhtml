@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">CS415 Project</ui:define>
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:panel header="STUDENTS" style="margin-bottom: 2%;">
+
+                <div class="Container100 ui-fluid ContainerIndent" >
+
+                    <div>
+
+                        <p:panel>
+
+                            <p:messages id="addStudentMessage" for="addStudentMessage" showDetail="false" autoUpdate="false" closable="true" />
+
+                            <p:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2, ui-grid-col-2,ui-grid-col-3" 
+                                         layout="grid" styleClass="ui-panelgrid-blank" 
+                                         style=" margin-top: 10px; margin-left: 2%; margin-right: 2%; border:0px none; background-color:transparent">
+
+                                <p:outputLabel value="ID NUMBER :" />
+                                <p:inputText  value="#{studentBean.studentId}" style="text-align: center"/>
+
+                                <p:spacer/>    
+
+                                <p:outputLabel value="NAME :" />
+                                <p:inputText  value="#{studentBean.name}" style="text-align: center"/>
+
+
+                                <p:outputLabel  value="GPA :" />
+                                <p:inputMask mask="9.9"  value="#{studentBean.gpa}" style="text-align: center"/>
+
+                                <p:spacer/>         
+
+                                <p:outputLabel  value="CLASS :" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}"/>
+                                <p:selectOneMenu  value="#{studentBean.className}" required="false" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}">
+                                    <f:selectItem itemLabel="Choose Class" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{studentBean.classList}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel  value="ROLE :" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}"/>
+                                <p:selectOneMenu  value="#{studentBean.role}" required="false" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}">
+                                    <f:selectItems value="#{studentBean.roleList}" />
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>
+
+
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-9, ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank" 
+                                         style="margin-top: 10px; margin-bottom: 0px; margin-left: 2%; margin-right: 2%; border:0px none; background-color:transparent;">
+
+                                <p:spacer/>            
+
+                                <p:commandButton value="Add Student" actionListener="#{studentBean.addStudent()}" styleClass="secondary" update="form" />
+
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </div>
+
+                    <div style="margin-top: 2%;">
+
+                        <p:dataTable emptyMessage="Student list is empty" var="studentObject" value="#{studentBean.students}"  
+                                     scrollable="true" scrollHeight="300" style="font-size:12px;"
+                                     rowIndexVar="rowIndex" draggableRows="true" draggableColumns="true">
+
+                            <f:facet name="header">
+                                STUDENTS (#{studentBean.students.size()})
+                            </f:facet>
+
+                            <p:column headerText="No" style="width: 5%; text-align: center">
+                                #{rowIndex+1}
+                            </p:column>
+
+                            <p:column headerText="Student ID" style="text-align: center">
+                                <h:outputText value="#{studentObject.studentId}" />
+                            </p:column>
+                            
+                            <p:column headerText="Student Name" style="text-align: center">
+                                <h:outputText value="#{studentObject.name}" />
+                            </p:column>
+                            
+                            <p:column headerText="GPA" style="text-align: center">
+                                <h:outputText value="#{studentObject.gpa}" />
+                            </p:column>
+                            
+                            <p:column headerText="Class Name" style="text-align: center" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}">
+                                <h:outputText value="#{studentBean.getClassNameOfStudent(studentObject)}" />
+                            </p:column>
+                            
+                            <p:column headerText="Student Role" style="text-align: center" rendered="#{applicationTypeBean.primary or applicationTypeBean.highSchool}">
+                                <h:outputText value="#{studentBean.getRoleNameOfStudent(studentObject)}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </div>
+
+                </div>
+
+            </p:panel>
+
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>
+

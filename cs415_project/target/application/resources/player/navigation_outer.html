@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Modern video player</title>
+        
+		<link rel="stylesheet" type="text/css" href="css/navigation_outer.css" /><!-- main plugin css -->
+        <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet"><!-- icons -->
+
+        <style type="text/css">
+
+            .mvp-playlist-header{
+                padding: 20px;
+            }
+            .mvp-pl-title{
+                display: inline-block;
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+            .mvp-pl-selector{
+                position: relative;
+                margin-bottom: 10px;
+                float: right;
+            }           
+            .mvp-pl-selector select{
+                padding: .25em;
+                border: 1px solid #333;
+                letter-spacing: .15em;
+                border-radius: 0;
+            }
+            .mvp-pl-selector select::-ms-expand {
+                display: none;
+            }
+            .mvp-playlist-inner{
+                clear: both;
+            }
+
+        </style>
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/hls.min.js"></script><!-- live streaming -->
+        <script type="text/javascript" src="js/three.min.js"></script><!-- 360 -->
+        <script type="text/javascript" src="js/orbitControls.min.js"></script><!-- 360 -->
+        <script type="text/javascript" src="js/jquery.dotdotdot.min.js"></script>
+        <script type="text/javascript" src="js/new.js"></script><!--  main plugin js -->
+        <script type="text/javascript">
+        
+			var player;  
+			jQuery(document).ready(function($) {
+				
+				var settings = {
+                    sourcePath:"",
+					instanceName:"player1",
+                    activePlaylist:"#playlist-youtube-3",
+					activeItem:0,
+					volume:0.5,
+					autoPlay:false,
+					randomPlay:false,
+					loopingOn:true,
+					mediaEndAction:"next",
+					aspectRatio:2,
+                    facebookAppId:"",
+                    youtubeAppId:"",
+					usePlaylist:true,
+					useKeyboardNavigationForPlayback:true,
+                    disableRightClick:true,
+                    hideQualityMenuOnSingleQuality:false,
+                    embedWidth:"1000px",
+                    embedHeight:"400px",
+                    embedSrc:"Place your embed code here!",
+                    forceMobileAutoplay:false,
+                    truncatePlaylistDescription:true,
+                    truncateWatch:true,
+                    sortableTracks:false,
+                    focusVideoOnActive:true
+
+				};
+                
+                player = $("#mvp-wrapper").on("playlistEndLoad", function(e, data){
+                    //called on playlist end load, returns (instance, instanceName)
+                    var title = select.find('option:selected').text();
+                    $('.mvp-pl-title').html(title);
+                }).mvp(settings);
+
+                $('.mvp-load-more-btn').on('click',function(){
+                    player.loadMore();
+                });
+
+                var select = $('.mvp-pl-selector select').on('change', function(){
+                    player.loadPlaylist($(this).val());
+                });
+
+			});
+
+        </script>
+    
+  </head>
+  <body>  
+  
+        <div id="mvp-wrapper">
+            
+            <div class="mvp-player-holder">
+
+                <div class="mvp-media-holder">
+
+                    <div class="mvp-youtube-holder"></div>
+                    <div class="mvp-vimeo-holder"></div>
+                    <div class="mvp-audio-holder"></div>
+                    <div class="mvp-video-holder"></div>
+                    <div class="mvp-image-holder"></div>
+                    <div class="mvp-iframe-holder"></div>
+
+                    <img class="mvp-vr-info" src="data/360.png" alt="">
+
+                    <div class="mvp-player-loader"></div>
+
+                </div>
+
+                <div class="mvp-big-play"><i class="fas fa-play"></i></div>
+
+                <div class="mvp-elem-holder"></div>
+
+                <div class="mvp-info-holder">
+                    <div class="mvp-info-data"></div>
+                    <div class="mvp-info-close mvp-contr-btn" data-tooltip="Close" data-tooltip-position="left"><i class="fas fa-times"></i></div>
+                </div> 
+
+                <div class="mvp-share-holder">
+
+                    <div class="mvp-share-holder-inner">
+
+                        <div class="mvp-share-data">
+                            <div class="mvp-share-title"><i class="fas fa-share-alt"></i>Share via:</div>
+                            <div class="mvp-share-data-inner">   
+                                <div class="mvp-share-item" data-type="tumblr" data-tooltip="tumblr"><i class="fab fa-tumblr"></i></div>
+                                <div class="mvp-share-item" data-type="twitter" data-tooltip="twitter"><i class="fab fa-twitter"></i></div>
+                                <div class="mvp-share-item" data-type="facebook" data-tooltip="facebook"><i class="fab fa-facebook-f"></i></div>
+                                <div class="mvp-share-item" data-type="googleplus" data-tooltip="googleplus"><i class="fab fa-google-plus-g"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="mvp-share-title"><i class="fas fa-link"></i>Direct link:</div>
+                        <div class="mvp-link-data">
+                            <p class="mvp-link-code"></p>
+                            <div class="mvp-link-copy">COPY</div>
+                        </div>
+
+                        <div class="mvp-share-title"><i class="fas fa-code"></i>Embed code:</div>
+                        <div class="mvp-embed-data">
+                            <p class="mvp-embed-code"></p>
+                            <div class="mvp-embed-copy">COPY</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mvp-share-close mvp-contr-btn" data-tooltip="Close" data-tooltip-position="left"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="mvp-player-controls1 mvp-player-interface">
+
+                    <div class="mvp-seekbar">
+                        <div class="mvp-progress-bg">
+                            <div class="mvp-load-level"></div>
+                            <div class="mvp-progress-level"></div>
+                        </div>
+                    </div>
+
+                    <div class="mvp-player-controls1-left">
+
+                        <div class="mvp-playback-toggle mvp-contr-btn" data-tooltip="Playback">
+                            <i class="fas fa-play mvp-btn mvp-btn-play"></i>
+                            <i class="fas fa-pause mvp-btn mvp-btn-pause"></i>
+                        </div>
+                        <div class="mvp-next-toggle mvp-contr-btn" data-tooltip="Next"><i class="fas fa-step-forward"></i></div>
+
+                        <p class="mvp-media-time-current">0:00</p>
+                        <p class="mvp-media-time-separator">&nbsp;&#47;&nbsp;</p>
+                        <p class="mvp-media-time-total">0:00</p>
+
+                    </div>
+
+                    <div class="mvp-player-controls1-right">
+                        
+                        <div class="mvp-quality-toggle mvp-contr-btn">
+                            <i class="fas fa-cog" data-tooltip="Quality"></i>
+                            <div class="mvp-quality-holder">
+                                <ul class="mvp-quality-menu"></ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-playback-rate-toggle mvp-contr-btn">
+                            <i class="fas fa-crop" data-tooltip="Playback rate"></i>
+                            <div class="mvp-playback-rate-holder">
+                                <ul class="mvp-playback-rate-menu">
+                                    <li class="mvp-menu-item"><a href="#">2</a></li>
+                                    <li class="mvp-menu-item"><a href="#">1.5</a></li>
+                                    <li class="mvp-menu-item"><a href="#">1</a></li>
+                                    <li class="mvp-menu-item"><a href="#">0.5</a></li>
+                                    <li class="mvp-menu-item"><a href="#">0.25</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-volume-wrapper mvp-contr-btn">
+                            <div class="mvp-volume-toggle mvp-contr-btn" data-tooltip="Volume">
+                                <i class="fas fa-volume-up mvp-btn mvp-btn-volume-up"></i>
+                                <i class="fas fa-volume-down mvp-btn mvp-btn-volume-down"></i>
+                                <i class="fas fa-volume-off mvp-btn mvp-btn-volume-off"></i>
+                            </div>
+                            <div class="mvp-volume-seekbar">
+                                <div class="mvp-volume-bg"></div>
+                                <div class="mvp-volume-level"></div>
+                            </div> 
+                        </div>  
+
+                        <div class="mvp-subtitle-toggle mvp-contr-btn">
+                            <i class="fas fa-closed-captioning" data-tooltip="Subtitles"></i>
+                            <div class="mvp-subtitle-holder">
+                                <ul class="mvp-subtitle-menu"></ul>
+                            </div>
+                        </div>
+
+                        <div class="mvp-info-toggle mvp-contr-btn" data-tooltip="Info"><i class="fas fa-info-circle"></i></div>
+                        
+                        <div class="mvp-share-toggle mvp-contr-btn" data-tooltip="Share"><i class="fas fa-share-alt"></i></div>
+
+                        <div class="mvp-download-toggle mvp-contr-btn" data-tooltip="Download"><a href="#"><i class="fas fa-download"></i></a></div>
+
+                        <div class="mvp-fullscreen-toggle mvp-contr-btn">
+                            <i class="fas fa-expand mvp-btn mvp-btn-fullscreen" data-tooltip="Fullscreen"></i>
+                            <i class="fas fa-compress mvp-btn mvp-btn-normal" data-tooltip="Normal"></i>
+                        </div>
+
+                    </div>
+                </div>
+
+                <a class="mvp-logo" href="https://codecanyon.net/user/Tean/portfolio?ref=Tean" target="_blank"><img src="data/logo.png" alt=""></a>
+
+            </div><!-- end mvp-player-holder -->
+
+            <div class="mvp-playlist-holder">
+
+                <div class="mvp-playlist-header">
+
+                    <p class="mvp-pl-title">Youtube GoPro Channel</p>
+
+                    <div class="mvp-pl-selector">
+                        <select>
+                            <option disabled="disabled">Select playlist...</option>
+                            <option value="#playlist-youtube-3" selected>Youtube GoPro Channel</option>
+                            <option value="#playlist-youtube-5">Youtube Motor Trend Channel</option>
+                            <option value="#playlist-vimeo-4">Vimeo Fashion In Motion</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="mvp-playlist-inner">
+                    <div class="mvp-playlist-content">
+
+                    </div>
+                </div> 
+            </div><!-- end mvp-playlist-holder --> 
+
+            <div class="mvp-tooltip"><p></p></div>   
+
+            <div class="mvp-load-more-btn">LOAD MORE</div>
+
+        </div><!-- end mvp-wrapper --> 
+
+
+
+
+        <!-- LIST OF PLAYLISTS -->   
+
+        <div id="mvp-playlist-list"> 
+
+            <div id="playlist-youtube-3"> 
+                <div class="mvp-playlist-item" data-type="youtube_channel" data-path="UCqhnX4jA0A5paNd1v-zEysw" data-limit="9"></div>
+            </div>
+
+            <div id="playlist-youtube-5"> 
+                <div class="mvp-playlist-item" data-type="youtube_playlist" data-path="PLEFAC5D656286E89B" data-limit="9"></div>
+            </div>
+
+            <div id="playlist-vimeo-4">
+                 <div class="mvp-playlist-item" data-type="vimeo_channel" data-path="fashioninmotion" data-limit="9" data-sort="date"></div>
+            </div>
+
+        </div>  
+		
+
+      </body>
+</html>

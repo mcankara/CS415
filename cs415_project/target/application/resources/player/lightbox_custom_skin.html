@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Modern video player</title>
+        
+		<link rel="stylesheet" type="text/css" href="css/lightbox_custom_skin.css" /><!-- main plugin css -->
+
+        <style type="text/css">
+
+           #photos {
+                -webkit-column-count: 5;
+                -webkit-column-gap:   0px;
+                -moz-column-count:    5;
+                -moz-column-gap:      0px;
+                column-count:         5;
+                column-gap:           0px;  
+            }
+            @media (max-width: 1200px) {
+              #photos {
+              -moz-column-count:    4;
+              -webkit-column-count: 4;
+              column-count:         4;
+              }
+            }
+            @media (max-width: 1000px) {
+              #photos {
+              -moz-column-count:    3;
+              -webkit-column-count: 3;
+              column-count:         3;
+              }
+            }
+            @media (max-width: 800px) {
+              #photos {
+              -moz-column-count:    2;
+              -webkit-column-count: 2;
+              column-count:         2;
+              }
+            }
+            @media (max-width: 400px) {
+              #photos {
+              -moz-column-count:    1;
+              -webkit-column-count: 1;
+              column-count:         1;
+              }
+            }
+            .item {
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                background: #fff;
+            }
+            .item img{
+                width: 100%;
+                height: auto;
+                display: block;
+                transition: transform .2s;
+            }
+            .caption{
+                top: auto;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 15px;
+                position: absolute;
+                opacity: 0;
+                -webkit-transform: translateY(100%);
+                transform: translateY(100%);
+                box-sizing:border-box;
+                transition: transform .2s;
+            }
+            .item:hover img{
+                -webkit-transform: translateY(-50px);
+                transform: translateY(-50px);
+            }
+            .item:hover .caption{
+                opacity: 1;
+                -webkit-transform: translateY(0px);
+                transform: translateY(0px);
+            }
+
+            
+
+
+        </style>
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/hls.min.js"></script><!-- live streaming -->
+        <script type="text/javascript" src="js/three.min.js"></script><!-- 360 -->
+        <script type="text/javascript" src="js/orbitControls.min.js"></script><!-- 360 -->
+        <script type="text/javascript" src="js/jquery.dotdotdot.min.js"></script>
+        <script type="text/javascript" src="js/new.js"></script><!--  main plugin js -->
+        <script type="text/javascript">
+        
+			var player;  
+			jQuery(document).ready(function($) {
+				
+				var settings = {
+                    sourcePath:"",
+					instanceName:"player1",
+                    /*activePlaylist:"",*/
+					activeItem:-1,
+					volume:0.5,
+					autoPlay:true,
+					randomPlay:false,
+					loopingOn:true,
+					mediaEndAction:"next",
+					aspectRatio:2,
+                    facebookAppId:"",
+                    youtubeAppId:"",
+					usePlaylist:false,
+					useKeyboardNavigationForPlayback:true,
+                    disableRightClick:true,
+                    hideQualityMenuOnSingleQuality:false,
+                    embedWidth:"1000px",
+                    embedHeight:"400px",
+                    embedSrc:"Place your embed code here!",
+                    forceMobileAutoplay:false,
+                    truncatePlaylistDescription:true,
+                    truncateWatch:true,
+                    sortableTracks:false,
+
+                    playerType: 'lightbox',
+                    clickOnBackgroundClosesLightbox:true,
+                    
+				};
+                
+                player = $("#mvp-wrapper").mvp(settings);
+
+                var trackList = [
+                    {
+                        type: 'video', 
+                        path: [
+                            {quality: 'default', ext: 'mp4', src: 'media/video/01.mp4'},
+                        ]
+                    },
+                    {
+                        type: 'video', 
+                        path: [
+                            {quality: 'default', ext: 'mp4', src: 'media/video/02.mp4'},
+                        ]
+                    },
+                    {
+                        type: 'video', 
+                        path: [
+                            {quality: 'default', ext: 'mp4', src: 'media/video/03.mp4'},
+                        ]
+                    },
+                    {
+                        type: 'video', 
+                        path: [
+                            {quality: 'default', ext: 'mp4', src: 'media/video/04.mp4'},
+                        ]
+                    },
+
+                    {
+                        type: 'audio', 
+                        path: [
+                            {quality: 'default', ext: 'mp3', src: 'media/audio/01.mp3'},
+                        ],
+                        poster:'media/audio/poster/01.jpg',
+                    },
+                    {
+                        type: 'audio', 
+                        path: [
+                            {quality: 'default', ext: 'mp3', src: 'media/audio/02.mp3'},
+                        ],
+                        poster:'media/audio/poster/02.jpg',
+                    },
+                    {
+                        type: 'audio', 
+                        path: [
+                            {quality: 'default', ext: 'mp3', src: 'media/audio/03.mp3'},
+                        ],
+                        poster:'media/audio/poster/03.jpg',
+                    },
+                    {
+                        type: 'audio', 
+                        path: [
+                            {quality: 'default', ext: 'mp3', src: 'media/audio/04.mp3'},
+                        ],
+                        poster:'media/audio/poster/04.jpg',
+                    },
+
+                    {
+                        type: 'image', 
+                        path: [
+                            {quality: 'default', ext: 'image', src: 'media/image/01.jpg'},
+                        ]
+                    },
+                    {
+                        type: 'image', 
+                        path: [
+                            {quality: 'default', ext: 'image', src: 'media/image/02.jpg'},
+                        ]
+                    },
+                    {
+                        type: 'image', 
+                        path: [
+                            {quality: 'default', ext: 'image', src: 'media/image/03.jpg'},
+                        ]
+                    },
+                    {
+                        type: 'image', 
+                        path: [
+                            {quality: 'default', ext: 'image', src: 'media/image/04.jpg'},
+                        ]
+                    },
+                ]
+
+                var i = 0;
+                $('.item').each(function(){
+                    $(this).attr('data-id', i);
+                    i++;
+                });
+
+                //click thumb
+                var active_id;
+                $('.item').on('click',function(){
+                    active_id = $(this).attr('data-id');
+                    player.inputMedia(trackList[active_id]);
+                });
+                //previous, next
+                $('.mvp-prev-toggle1').on('click',function(){
+                    active_id--;
+                    if(active_id<0)active_id = trackList.length-1;
+                    player.inputMedia(trackList[active_id]);
+                });
+                $('.mvp-next-toggle1').on('click',function(){
+                    active_id++;
+                    if(active_id>trackList.length-1)active_id = 0;
+                    player.inputMedia(trackList[active_id]);
+                });
+
+			});
+
+        </script>
+    
+  </head>
+  <body>  
+
+        <div id="photos">
+
+            <div class="item">
+                <img src="media/video/poster/01.jpg" alt="">
+                <div class="caption">Video Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/video/poster/02.jpg" alt="">
+                <div class="caption">Video Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/video/poster/03.jpg" alt="">
+                <div class="caption">Video Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/video/poster/04.jpg" alt="">
+                <div class="caption">Video Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/audio/poster/01.jpg" alt="">
+                <div class="caption">Audio Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/audio/poster/02.jpg" alt="">
+                <div class="caption">Audio Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/audio/poster/03.jpg" alt="">
+                <div class="caption">Audio Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/audio/poster/04.jpg" alt="">
+                <div class="caption">Audio Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/image/01.jpg" alt="">
+                <div class="caption">Image Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/image/02.jpg" alt="">
+                <div class="caption">Image Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/image/03.jpg" alt="">
+                <div class="caption">Image Slide Up Caption</div>
+            </div>
+
+            <div class="item">
+                <img src="media/image/04.jpg" alt="">
+                <div class="caption">Image Slide Up Caption</div>
+            </div>
+
+        </div>
+
+      
+
+  
+        <div id="mvp-wrapper">
+
+            <div class="mvp-lightbox-wrap">
+            <div class="mvp-lightbox-bg"></div>
+            <div class="mvp-lightbox">
+            
+            <div class="mvp-player-holder">
+
+                <div class="mvp-media-holder">
+
+                    <div class="mvp-youtube-holder"></div>
+                    <div class="mvp-vimeo-holder"></div>
+                    <div class="mvp-audio-holder"></div>
+                    <div class="mvp-video-holder"></div>
+                    <div class="mvp-image-holder"></div>
+                    <div class="mvp-iframe-holder"></div>
+
+                    <img class="mvp-vr-info" src="data/360.png" alt="">
+
+                    <div class="mvp-player-loader"></div>
+
+                </div>
+
+                <div class="mvp-elem-holder"></div>
+
+                <div class="mvp-player-controls3 mvp-player-interface">
+
+                    <div class="mvp-seekbar">
+                        <div class="mvp-progress-bg">
+                            <div class="mvp-load-level"></div>
+                            <div class="mvp-progress-level"></div>
+                        </div>
+                    </div>
+            
+                    <p class="mvp-media-time-current">0:00</p>
+                   
+                    <div class="mvp-playback-toggle mvp-contr-btn">
+
+                        <svg aria-hidden="true" data-prefix="fas" data-icon="play" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-play fa-w-14 mvp-btn mvp-btn-play"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" class=""></path></svg>
+
+                        <svg aria-hidden="true" data-prefix="fas" data-icon="pause" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-pause fa-w-14 mvp-btn mvp-btn-pause"><path fill="currentColor" d="M144 479H48c-26.5 0-48-21.5-48-48V79c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm304-48V79c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48z" class=""></path></svg>
+
+                    </div>
+
+                    <div class="mvp-volume-wrapper mvp-contr-btn">
+                        <div class="mvp-volume-toggle mvp-contr-btn" data-tooltip="Volume">
+
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="volume-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-volume-up fa-w-18 mvp-btn mvp-btn-volume-up"><path fill="currentColor" d="M256 88.017v335.964c0 21.438-25.943 31.998-40.971 16.971L126.059 352H24c-13.255 0-24-10.745-24-24V184c0-13.255 10.745-24 24-24h102.059l88.971-88.954c15.01-15.01 40.97-4.49 40.97 16.971zm182.056-77.876C422.982.92 403.283 5.668 394.061 20.745c-9.221 15.077-4.473 34.774 10.604 43.995C468.967 104.063 512 174.983 512 256c0 73.431-36.077 142.292-96.507 184.206-14.522 10.072-18.129 30.01-8.057 44.532 10.076 14.528 30.016 18.126 44.531 8.057C529.633 438.927 576 350.406 576 256c0-103.244-54.579-194.877-137.944-245.859zM480 256c0-68.547-36.15-129.777-91.957-163.901-15.076-9.22-34.774-4.471-43.994 10.607-9.22 15.078-4.471 34.774 10.607 43.994C393.067 170.188 416 211.048 416 256c0 41.964-20.62 81.319-55.158 105.276-14.521 10.073-18.128 30.01-8.056 44.532 6.216 8.96 16.185 13.765 26.322 13.765a31.862 31.862 0 0 0 18.21-5.709C449.091 377.953 480 318.938 480 256zm-96 0c0-33.717-17.186-64.35-45.972-81.944-15.079-9.214-34.775-4.463-43.992 10.616s-4.464 34.775 10.615 43.992C314.263 234.538 320 244.757 320 256a32.056 32.056 0 0 1-13.802 26.332c-14.524 10.069-18.136 30.006-8.067 44.53 10.07 14.525 30.008 18.136 44.53 8.067C368.546 316.983 384 287.478 384 256z" class=""></path></svg>
+
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="volume-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-volume-down fa-w-12 mvp-btn mvp-btn-volume-down"><path fill="currentColor" d="M256 88.017v335.964c0 21.438-25.943 31.998-40.971 16.971L126.059 352H24c-13.255 0-24-10.745-24-24V184c0-13.255 10.745-24 24-24h102.059l88.971-88.954c15.01-15.01 40.97-4.49 40.97 16.971zM384 256c0-33.717-17.186-64.35-45.972-81.944-15.079-9.214-34.775-4.463-43.992 10.616s-4.464 34.775 10.615 43.992C314.263 234.538 320 244.757 320 256a32.056 32.056 0 0 1-13.802 26.332c-14.524 10.069-18.136 30.006-8.067 44.53 10.07 14.525 30.008 18.136 44.53 8.067C368.546 316.983 384 287.478 384 256z" class=""></path></svg>
+
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="volume-off" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-volume-off fa-w-8 mvp-btn mvp-btn-volume-off"><path fill="currentColor" d="M256 88.017v335.964c0 21.438-25.943 31.998-40.971 16.971L126.059 352H24c-13.255 0-24-10.745-24-24V184c0-13.255 10.745-24 24-24h102.059l88.971-88.954c15.01-15.01 40.97-4.49 40.97 16.971z" class=""></path></svg>
+
+                        </div>
+                        <div class="mvp-volume-seekbar mvp-horizontal">
+                            <div class="mvp-volume-bg"></div>
+                            <div class="mvp-volume-level"></div>
+                        </div> 
+                    </div> 
+
+                    <p class="mvp-media-time-total">0:00</p> 
+
+                </div>
+
+                <div class="mvp-player-controls3-top mvp-player-interface">
+
+                    <div class="mvp-fullscreen-toggle mvp-contr-btn">
+
+                        <svg aria-hidden="true" data-prefix="fas" data-icon="expand-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-expand-alt fa-w-14 mvp-btn mvp-btn-fullscreen"><path fill="currentColor" d="M212.686 315.314L120 408l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C10.697 480 0 469.255 0 456V344c0-21.382 25.803-32.09 40.922-16.971L72 360l92.686-92.686c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.249 6.248 6.249 16.378 0 22.627zm22.628-118.628L328 104l-32.922-31.029C279.958 57.851 290.666 32 312.048 32h112C437.303 32 448 42.745 448 56v112c0 21.382-25.803 32.09-40.922 16.971L376 152l-92.686 92.686c-6.248 6.248-16.379 6.248-22.627 0l-25.373-25.373c-6.249-6.248-6.249-16.378 0-22.627z" class="" data-tooltip="Fullscreen"></path></svg>
+
+                        <svg aria-hidden="true" data-prefix="fas" data-icon="compress-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-compress-alt fa-w-14 mvp-btn mvp-btn-normal"><path fill="currentColor" d="M4.686 427.314L104 328l-32.922-31.029C55.958 281.851 66.666 256 88.048 256h112C213.303 256 224 266.745 224 280v112c0 21.382-25.803 32.09-40.922 16.971L152 376l-99.314 99.314c-6.248 6.248-16.379 6.248-22.627 0L4.686 449.941c-6.248-6.248-6.248-16.379 0-22.627zM443.314 84.686L344 184l32.922 31.029c15.12 15.12 4.412 40.971-16.97 40.971h-112C234.697 256 224 245.255 224 232V120c0-21.382 25.803-32.09 40.922-16.971L296 136l99.314-99.314c6.248-6.248 16.379-6.248 22.627 0l25.373 25.373c6.248 6.248 6.248 16.379 0 22.627z" class="" data-tooltip="Normal"></path></svg>
+                    
+                    </div>
+
+                    <div class="mvp-lightbox-close mvp-contr-btn" data-tooltip="Close">
+
+                        <svg aria-hidden="true" data-prefix="far" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-times fa-w-12"><path fill="currentColor" d="M231.6 256l130.1-130.1c4.7-4.7 4.7-12.3 0-17l-22.6-22.6c-4.7-4.7-12.3-4.7-17 0L192 216.4 61.9 86.3c-4.7-4.7-12.3-4.7-17 0l-22.6 22.6c-4.7 4.7-4.7 12.3 0 17L152.4 256 22.3 386.1c-4.7 4.7-4.7 12.3 0 17l22.6 22.6c4.7 4.7 12.3 4.7 17 0L192 295.6l130.1 130.1c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17L231.6 256z" class=""></path></svg>
+
+                    </div>
+
+                </div>
+
+                <div class="mvp-player-controls3-middle mvp-player-interface">
+
+                    <div class="mvp-prev-toggle1 mvp-contr-btn" data-tooltip="Previous">
+
+                        <svg aria-hidden="true" data-prefix="fal" data-icon="caret-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" class="svg-inline--fa fa-caret-left fa-w-6"><path fill="currentColor" d="M192 383.968v-255.93c0-28.425-34.488-42.767-54.627-22.627l-128 127.962c-12.496 12.496-12.497 32.758 0 45.255l128 127.968C157.472 426.695 192 412.45 192 383.968zM32 256l128-128v256L32 256z" class=""></path></svg>
+                           
+                    </div>
+
+                    <div class="mvp-next-toggle1 mvp-contr-btn" data-tooltip="Next">
+
+                        <svg aria-hidden="true" data-prefix="fal" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" class="svg-inline--fa fa-caret-right fa-w-6"><path fill="currentColor" d="M0 128.032v255.93c0 28.425 34.488 42.767 54.627 22.627l128-127.962c12.496-12.496 12.497-32.758 0-45.255l-128-127.968C34.528 85.305 0 99.55 0 128.032zM160 256L32 384V128l128 128z" class=""></path></svg> 
+
+                    </div>
+
+                </div>
+
+            </div><!-- end mvp-player-holder -->
+              
+            </div></div><!-- end mvp-lightbox-wrap -->
+
+            <div class="mvp-playlist-holder">
+
+                <div class="mvp-playlist-inner">
+                    <div class="mvp-playlist-content"></div>
+                </div> 
+            </div><!-- end mvp-playlist-holder --> 
+
+            <div class="mvp-tooltip"><p></p></div>   
+
+        </div><!-- end mvp-wrapper --> 
+
+
+
+
+      </body>
+</html>

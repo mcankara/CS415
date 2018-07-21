@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">CS415 Project</ui:define>
+
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="content">
+
+        <p:panel class="timetable" header="Weekly Schedule of #{applicationTypeBean.applicationTypeText} #{userBean.userType}">
+
+            <table width="100%" align="center">
+                <div id="head_nav">
+                    <tr>
+                        <th id="times" style="width: 15%; background-color: #829999; padding: 10px"><span class="full-text">DERS SAATLERİ</span><span class="short-text">SAATLER</span></th>
+                        <th id="d1" style="width: 12%; background-color: #829999;"><span class="full-text">PAZARTESİ</span><span class="short-text">PZT</span></th>
+                        <th id="d2" style="width: 12%; background-color: #829999;"><span class="full-text">SALI</span><span class="short-text">SAL</span></th>
+                        <th id="d3" style="width: 12%; background-color: #829999;"><span class="full-text">ÇARŞAMBA</span><span class="short-text">ÇRŞ</span></th>
+                        <th id="d4" style="width: 12%; background-color: #829999;"><span class="full-text">PERŞEMBE</span><span class="short-text">PRŞ</span></th>
+                        <th id="d5" style="width: 12%; background-color: #829999;"><span class="full-text">CUMA</span><span class="short-text">CUM</span></th>
+                        <th id="d6" style="width: 12%; background-color: #829999;"><span class="full-text">CUMARTESİ</span><span class="short-text">CMT</span></th>
+                        <th id="d7" style="width: 12%; background-color: #829999;"><span class="full-text">PAZAR</span><span class="short-text">PZR</span></th>
+                    </tr>
+                </div>  
+
+                <p:repeat value="#{scheduleBean.courseChart}" var="row" varStatus="r">
+                    <tr>
+                        <th id="h#{r.index+1}" style="font-size: 12px; line-height: 15px;">
+                            #{r.index+1}. Ders 
+                            <span style="color:#444444; margin-left: 5px; font-size: 12px;"><br/></span>
+                        </th>
+                        <p:repeat value="#{row}" var="column" varStatus="c">                                        
+                            <td id="#{r.index}-#{c.index}" onclick="locationClick(this)">
+                                #{r.index+1}
+                            </td>                                                                            
+                        </p:repeat>                               
+                    </tr>
+                </p:repeat>
+
+            </table>
+
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,48 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pa="http://primefaces.org/serenity">
+
+    <div class="layout-topbar">
+        <a href="home_page.xhtml" class="topbar-logo" style="margin-top: -4px !important;">
+            <p:graphicImage name="images/logo-slim.png" library="serenity-layout" style="max-height: 40px"/>
+            <span class="app-name" style="position: relative; top: 5px;">CS415 Project</span>
+        </a>
+
+        <p:graphicImage name="images/logo-slim.png" library="serenity-layout" styleClass="mobile-logo" style="margin-top: -12px !important; max-height: 40px;"/>
+
+        <a href="#" class="menu-btn" style="margin-top: -8px;">
+            <i class="material-icons">&#xE5D2;</i>
+        </a>
+
+        <a href="#" class="topbar-menu-btn" style="margin-top: -8px;">
+            <i class="material-icons">&#xE853;</i>
+        </a>
+
+        <div class="layout-topbar-menu-wrapper">
+            <div class="sidebar-logo">   
+                <a href="home_page.xhtml">
+                    <p:graphicImage name="images/logo-slim.png" library="serenity-layout" />
+                    <span class="app-name">CS415 Project</span>
+                </a>
+                <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+            </div>            
+            <ul class="topbar-menu animated">
+                <li class="profile-item">
+                    <a href="#">       
+                        <span class="profile-image-wrapper">
+                            <p:graphicImage name="images/avatar.png" library="serenity-layout" />
+                        </span>                     
+                        <span class="topbar-item-name profile-name">Furkan Derin</span>
+                    </a>
+
+                </li>   
+
+            </ul>
+        </div>
+    </div>
+
+</ui:composition>

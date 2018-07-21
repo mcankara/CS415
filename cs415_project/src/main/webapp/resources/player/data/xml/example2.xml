@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<data>
+
+	<div class="mvp-playlist-item" data-type="video_360" data-path='[{"quality": "default", "mp4": "media/360_video/02.mp4"}]'> 
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="media/360_video/thumb/03.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">360 video title goes here</span>
+			<span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#fff78e;"> link here</a> commodo in nec vivamus dolor. Integer vel ante. Proin felis. Maecenas eu erat condimentum neque molestie tincidunt. Fusce egestas, est ut fringilla facilisis, quam purus blandit dui, eget egestas mauris nibh ut diam.</span>
+		</div>
+
+	</div>
+	
+	<div class="mvp-playlist-item" data-type="image" data-path='[{"quality": "default", "image": "media/360_image/01.jpg"}, {"quality": "1500px", "image": "media/360_image/01.jpg"}, {"quality": "3000px", "image": "media/360_image/01.jpg"}]' data-download="media/image/02.jpg" data-share="http://www.google.com"> 
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="media/image/thumb/02.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">Image title goes here</span>
+			<span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#fff78e;"> link here</a> commodo in nec vivamus dolor. Integer vel ante. Proin felis. Maecenas eu erat condimentum neque molestie tincidunt. Fusce egestas, est ut fringilla facilisis, quam purus blandit dui, eget egestas mauris nibh ut diam.</span>
+		</div>
+
+	</div>
+
+	<div class="mvp-playlist-item" data-type="youtube_single" data-path="TmNEG8IFd_Y"></div>
+
+	<div class="mvp-playlist-item" data-type="youtube_single" data-path="pSOoXLRBDuk"></div>
+
+</data>

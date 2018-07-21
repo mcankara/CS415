@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<data>
+
+	<div class="mvp-playlist-item" data-type="video" data-path='[{"quality": "default", "mp4": "media/video/02.mp4"}]' data-poster="media/video/poster/02.jpg"> 
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="media/video/thumb/02.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">Video title goes here</span>
+			<span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#fff78e;"> link here</a> nec vivamus dolor. Integer vel ante. Proin felis. Maecenas eu erat condimentum neque molestie tincidunt. Fusce egestas, est ut fringilla facilisis, quam purus blandit dui, eget egestas mauris nibh ut diam. Phasellus volutpat. Sed fringilla tellus in sem.</span>
+		</div>
+		
+	</div>
+
+	<div class="mvp-playlist-item" data-type="video" data-path='[{"quality": "default", "mp4": "media/video/03.mp4"}]'> 
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="media/video/thumb/03.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">Video title goes here</span>
+			<span class="mvp-playlist-description">Custom description. Commodo vitae, tempor eu, urna eu mi hendrerit. Tiam justo commodo in<a href="http://www.google.com" target="_blank" style="color:#fff78e;"> link here</a> nec vivamus dolor. Integer vel ante. Proin felis. Maecenas eu erat condimentum neque molestie tincidunt. Fusce egestas, est ut fringilla facilisis, quam purus blandit dui, eget egestas mauris nibh ut diam. Phasellus volutpat. Sed fringilla tellus in sem.</span>
+		</div>
+
+	</div>
+	
+	<div class="mvp-playlist-item" data-type="youtube_single" data-path="az_TlQMRaMI" data-noapi>
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="https://i.ytimg.com/vi/az_TlQMRaMI/mqdefault.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">Youtube video goes here</span>
+			<span class="mvp-playlist-description">This Fashion Commercial is style Preview of our Resort wear 2016 and Spring Summer 2016 Collection.</span>
+		</div>
+
+		<div class="mvp-subtitles">
+			<div data-label="English" data-src="data/subtitles/sintel-en.vtt" data-default></div>  
+			<div data-label="German" data-src="data/subtitles/sintel-de.vtt"></div>
+			<div data-label="Spanish" data-src="data/subtitles/sintel-es.vtt"></div>
+		</div>
+
+	</div>
+
+	<div class="mvp-playlist-item" data-type="youtube_single" data-path="rNTyF4qXw3A" data-noapi>
+
+		<div class="mvp-playlist-thumb">
+			<img class="mvp-thumbimg" src="https://i.ytimg.com/vi/rNTyF4qXw3A/mqdefault.jpg" alt="">
+		</div>
+
+		<div class="mvp-playlist-info">
+			<span class="mvp-playlist-title">Youtube video goes here</span>
+			<span class="mvp-playlist-description">Youtube custom description. A Fashion Commercial for White Heir's new line of clothing coming fall 2015.</span>
+		</div>
+
+	</div>
+	
+</data>
